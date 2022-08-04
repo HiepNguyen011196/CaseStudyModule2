@@ -7,6 +7,12 @@ public class Medicines extends Items implements Serializable {
     private int quantity;
     private String usage;
 
+    public Medicines(String id, int cost) {
+    }
+
+    public Medicines(String id, int cost, String name) {
+    }
+
     @Override
     public double getPrice() {
         return quantity*this.getCost();

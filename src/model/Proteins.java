@@ -7,6 +7,12 @@ public class Proteins extends Items implements Serializable {
     private int weight;
     private String type;
 
+    public Proteins(String id, int cost) {
+    }
+
+    public Proteins(String id, int cost, String name) {
+    }
+
     @Override
     public double getPrice() {
         return weight*this.getCost();

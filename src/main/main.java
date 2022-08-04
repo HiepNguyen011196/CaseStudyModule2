@@ -91,21 +91,28 @@ public class main {
         Scanner scc = new Scanner(System.in);
         String ID = scc.nextLine();
         if (validate.validateId(ID)) {
-            String type = ID.substring(0, 2);
-            items.add(addInformation(type, ID));
+            String id = ID.substring(0, 2);
+            items.add(addInformation(id, ID));
         } else {
             System.err.println("ERROR!!!!");
             System.out.println();
         }
     }
 
-    private static Items addInformation(String type, String ID) {
+    private static Items addInformation(String id, String ID) {
         Scanner scanner2 = new Scanner(System.in);
         System.out.println("ENTER ITEM NAME: ");
-        String name1 = scanner2.nextLine();
+        String name = scanner2.nextLine();
         System.out.println("ENTER COST: ");
         int cost = scanner2.nextInt();
-        return null;
+        return switch (id) {
+            case "DR" -> new Drinks(id, cost, name);
+            case "MD" -> new Medicines(id, cost, name);
+            case "PS" -> new PersonalStuff(id, cost, name);
+            case "PT" -> new Proteins(id, cost, name);
+            case "VG" -> new Vegetables(id, cost, name);
+            default -> null;
+        };
     }
 
 

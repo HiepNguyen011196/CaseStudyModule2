@@ -6,6 +6,12 @@ import java.time.LocalDate;
 public class Drinks extends Items implements Serializable {
     private int quantity;
 
+    public Drinks(String id, int cost) {
+    }
+
+    public Drinks(String id, int cost, String name) {
+    }
+
     @Override
     public double getPrice() {
         return quantity*this.getCost();
