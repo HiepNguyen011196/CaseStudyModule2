@@ -1,33 +1,32 @@
 package model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Drinks extends Items {
+public class Drinks extends Items implements Serializable {
     private int quantity;
-    private LocalDate manufacturingDate;
 
-    public Drinks() {
+    @Override
+    public double getPrice() {
+        return quantity*this.getCost();
     }
 
-    public Drinks(String id, String name, int cost, int quantity, LocalDate manufacturingDate) {
-        super(id, name, cost);
-        this.quantity = quantity;
-        this.manufacturingDate = manufacturingDate;
+    @Override
+    public LocalDate getExpiryDate() {
+        return this.getManufacturingDate().plusWeeks(2);
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
 
-    public void setQuantity(int quantity) {
+    public Drinks(String id, String name, int cost, LocalDate manufacturingDate, int quantity) {
+        super(id, name, cost, manufacturingDate);
         this.quantity = quantity;
     }
 
-    public LocalDate getManufacturingDate() {
-        return manufacturingDate;
-    }
-
-    public void setManufacturingDate(LocalDate manufacturingDate) {
-        this.manufacturingDate = manufacturingDate;
+    @Override
+    public String toString() {
+        return "Drinks{" +
+                "quantity=" + quantity +
+                super.toString() +
+                '}';
     }
 }

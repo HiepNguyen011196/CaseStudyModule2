@@ -1,31 +1,36 @@
 package model;
 
-public class Proteins extends Items {
+import java.io.Serializable;
+import java.time.LocalDate;
+
+public class Proteins extends Items implements Serializable {
     private int weight;
     private String type;
 
-    public Proteins() {
+    @Override
+    public double getPrice() {
+        return weight*this.getCost();
     }
 
-    public Proteins(String id, String type, String name, int cost, int weight) {
-        super(id, name, cost);
+    @Override
+    public LocalDate getExpiryDate() {
+        return this.getManufacturingDate().plusWeeks(4);
+    }
+
+
+    public Proteins(String id, String name, int cost, LocalDate manufacturingDate, int weight, String type) {
+        super(id, name, cost, manufacturingDate);
         this.weight = weight;
         this.type = type;
     }
 
-    public int getWeight() {
-        return weight;
-    }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    @Override
+    public String toString() {
+        return "Proteins{" +
+                "weight=" + weight +
+                ", type='" + type + '\'' +
+                super.toString() +
+                '}';
     }
 }

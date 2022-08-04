@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReadWriteFileBinary<E> implements ReadWriteDataBinary<E> {
+public class ReadWriteFileBinary<E> implements ReadWriteData<E> {
     private static ReadWriteFileBinary instance = null;
 
     private ReadWriteFileBinary() {

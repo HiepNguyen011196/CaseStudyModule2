@@ -1,33 +1,30 @@
 package model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Vegetables extends Items {
+public class Vegetables extends Items implements Serializable {
     private int weight;
-    private LocalDate manufacturingDate;
 
-    public Vegetables() {
+    @Override
+    public double getPrice() {
+        return weight*this.getCost();
     }
 
-    public Vegetables(String id, String name, int cost, int weight, LocalDate manufacturingDate) {
-        super(id, name, cost);
-        this.weight = weight;
-        this.manufacturingDate = manufacturingDate;
+    @Override
+    public LocalDate getExpiryDate() {
+        return this.getManufacturingDate().plusDays(4);
     }
 
-    public int getWeight() {
-        return weight;
+    public Vegetables(String id, String name, int cost, LocalDate manufacturingDate) {
+        super(id, name, cost, manufacturingDate);
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
-    public LocalDate getManufacturingDate() {
-        return manufacturingDate;
-    }
-
-    public void setManufacturingDate(LocalDate manufacturingDate) {
-        this.manufacturingDate = manufacturingDate;
+    @Override
+    public String toString() {
+        return "Vegetables{" +
+                "weight=" + weight +
+                super.toString() +
+                '}';
     }
 }
