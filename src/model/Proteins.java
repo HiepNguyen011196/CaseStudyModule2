@@ -7,10 +7,12 @@ public class Proteins extends Items implements Serializable {
     private int weight;
     private String type;
 
-    public Proteins(String id, int cost) {
-    }
 
-    public Proteins(String id, int cost, String name) {
+    public Proteins(String id, String name, int cost) {
+        this.setId(id);
+        this.setCost(cost);
+        this.setName(name);
+
     }
 
     @Override
@@ -33,10 +35,10 @@ public class Proteins extends Items implements Serializable {
 
     @Override
     public String toString() {
-        return "Proteins{" +
+        return super.toString() +
+                " Proteins{" +
                 "weight=" + weight +
                 ", type='" + type + '\'' +
-                super.toString() +
                 '}';
     }
 }

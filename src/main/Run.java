@@ -8,8 +8,9 @@ import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class main {
+public class Run {
     public static Scanner scanner = new Scanner(System.in);
+    public static Scanner scanner1 = new Scanner(System.in);
     private static final Validate validate = new Validate();
 
 
@@ -34,10 +35,12 @@ public class main {
             System.out.println("OPTION 4: REMOVE ITEM");
             System.out.println("OPTION 5: SORT ITEMS BY PRICE FROM HIGH TO LOW");
             System.out.println("OPTION 6: SORT ITEMS BY PRICE FROM LOW TO HIGH");
+            System.out.println("OPTION 7: TOTAL COST");
             System.out.println("OPTION 0: EXIT");
             System.out.println("----------------------------------------------");
             try {
-                int choice = Integer.parseInt(scanner.nextLine());
+                Scanner scanner2 = new Scanner(System.in);
+                int choice = Integer.parseInt(scanner2.nextLine());
                 switch (choice) {
                     case 1:
                         try {
@@ -55,7 +58,10 @@ public class main {
                         break;
                     case 4:
                         itemsManager.display();
-                        deleteItems(itemsManager);
+                        System.out.print("ENTER POSITION OF ITEM TO DELETE:");
+                        int index = scanner.nextInt();
+                        scanner.nextLine();
+                        itemsManager.delete(index);
                         break;
                     case 5:
                         itemsManager.sortByCostHighToLow();
@@ -63,36 +69,28 @@ public class main {
                     case 6:
                         itemsManager.sortByCostLowToHigh();
                         break;
+                    case 7:
+                        double totalCost = itemsManager.totalCost();
+                        System.out.println("Your total cost is: " + totalCost);
+                        break;
                     case 0:
                         System.err.println("BYE");
                         return;
                     default:
                         System.err.println("PLEASE ENTER AGAIN");
                 }
-            } catch (NumberFormatException e) {
-                System.err.println("MUST ENTER NUMBER !");
+            } catch (Exception e) {
+                System.err.println("ERROR !");
             }
         }
     }
 
-    private static void deleteItems(Manager items) {
-        System.out.println("Nhập mã sản phẩm mún xóa:");
-        String code = scanner.nextLine();
-        if (validate.validateId(code)) {
-            items.delete(Integer.parseInt(code));
-        } else {
-            System.err.println("Cú pháp không hợp lệ!!!!");
-            System.out.println();
-        }
-    }
-
-    private static void addItems(Manager items) {
+    private static void addItems(Manager manager) {
         System.out.println("ENTER ITEM TO ADD:");
-        Scanner scc = new Scanner(System.in);
-        String ID = scc.nextLine();
+        String ID = scanner.nextLine();
         if (validate.validateId(ID)) {
             String id = ID.substring(0, 2);
-            items.add(addInformation(id, ID));
+            manager.add(addInformation(id, ID));
         } else {
             System.err.println("ERROR!!!!");
             System.out.println();
@@ -100,64 +98,52 @@ public class main {
     }
 
     private static Items addInformation(String id, String ID) {
-        Scanner scanner2 = new Scanner(System.in);
         System.out.println("ENTER ITEM NAME: ");
-        String name = scanner2.nextLine();
+        String name = scanner1.nextLine();
         System.out.println("ENTER COST: ");
-        int cost = scanner2.nextInt();
-        return switch (id) {
-            case "DR" -> new Drinks(id, cost, name);
-            case "MD" -> new Medicines(id, cost, name);
-            case "PS" -> new PersonalStuff(id, cost, name);
-            case "PT" -> new Proteins(id, cost, name);
-            case "VG" -> new Vegetables(id, cost, name);
+        int cost = scanner.nextInt();
+        Items demo = switch (id) {
+            case "DR" -> new Drinks(ID, name, cost);
+            case "MD" -> new Medicines(ID, name, cost);
+            case "PS" -> new PersonalStuff(ID, name, cost);
+            case "PT" -> new Proteins(ID, name, cost);
+            case "VG" -> new Vegetables(ID, name, cost);
             default -> null;
         };
+        ;
+        return demo;
     }
 
 
     private static void editItem(Manager items) {
-        System.out.println("ENTER ITEM TO EDIT: ");
+        System.out.println("ENTER ITEM TO EDIT:");
         String id = scanner.nextLine();
         if (validate.validateId(id)) {
-            String Id = id.substring(0, 2);
-            items.add(editInformation(Id, items));
-        } else {
-            System.err.println("CAN'T FIND ID !");
-        }
-    }
-
-    private static Items editInformation(String id, Manager items) {
-        switch (id) {
-            case "MD":
-            case "PS":
-            case "PT":
-            case "VG":
-            case "DR":
-                try {
-                    System.out.println("OPTION 1: EDIT NAME");
-                    System.out.println("OPTION 2: EDIT COST");
-                    Scanner sc = new Scanner(System.in);
-                    int choice = sc.nextInt();
-                    switch (choice) {
-                        case 1 -> {
-                            System.out.println("ENTER NEW NAME: ");
-                            Scanner name = new Scanner(System.in);
-                            String newName = name.nextLine();
-                            items.editName(id, newName);
-                        }
-                        case 2 -> {
-                            System.out.println("ENTER NEW COST: ");
-                            Scanner cost = new Scanner(System.in);
-                            int newCost = cost.nextInt();
-                            items.editCost(id, newCost);
-                        }
+            try {
+                System.out.println("OPTION 1: EDIT NAME");
+                System.out.println("OPTION 2: EDIT COST");
+                int choice = Integer.parseInt(scanner.nextLine());
+                switch (choice) {
+                    case 1 -> {
+                        System.out.println("ENTER NEW NAME: ");
+                        Scanner name = new Scanner(System.in);
+                        String newName = name.nextLine();
+                        items.editName(id, newName);
                     }
-                } catch (InputMismatchException e) {
-                    System.out.println("PLEASE REENTER!!");
+                    case 2 -> {
+                        System.out.println("ENTER NEW COST:");
+                        Scanner cost = new Scanner(System.in);
+                        String newCost = cost.nextLine();
+                        items.editCost(id, Double.parseDouble(newCost));
+                    }
                 }
+            } catch(InputMismatchException e){
+                System.out.println("WRONG INPUT");
+            }
+        } else {
+            System.err.println("WRONG INPUT!!!!");
+            System.out.println();
         }
-        return null;
     }
 }
 

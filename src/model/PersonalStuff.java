@@ -6,10 +6,11 @@ import java.time.LocalDate;
 public class PersonalStuff extends Items implements Serializable {
     private int quantity;
 
-    public PersonalStuff(String id, int cost) {
-    }
 
-    public PersonalStuff(String id, int cost, String name) {
+    public PersonalStuff(String id, String name, int cost) {
+        this.setId(id);
+        this.setCost(cost);
+        this.setName(name);
     }
 
     @Override
@@ -30,9 +31,9 @@ public class PersonalStuff extends Items implements Serializable {
 
     @Override
     public String toString() {
-        return "PersonalStuff{" +
+        return super.toString() +
+                " PersonalStuff{" +
                 "quantity=" + quantity +
-                super.toString() +
                 '}';
     }
 }

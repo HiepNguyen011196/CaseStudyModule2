@@ -6,10 +6,10 @@ import java.time.LocalDate;
 public class Vegetables extends Items implements Serializable {
     private int weight;
 
-    public Vegetables(String id, int cost) {
-    }
-
-    public Vegetables(String id, int cost, String name) {
+    public Vegetables(String id, String name, int cost) {
+        this.setId(id);
+        this.setCost(cost);
+        this.setName(name);
     }
 
     @Override
@@ -28,9 +28,9 @@ public class Vegetables extends Items implements Serializable {
 
     @Override
     public String toString() {
-        return "Vegetables{" +
+        return super.toString() +
+                " Vegetables{" +
                 "weight=" + weight +
-                super.toString() +
                 '}';
     }
 }

@@ -7,10 +7,11 @@ public class Medicines extends Items implements Serializable {
     private int quantity;
     private String usage;
 
-    public Medicines(String id, int cost) {
-    }
 
-    public Medicines(String id, int cost, String name) {
+    public Medicines(String id, String name, int cost) {
+        this.setId(id);
+        this.setName(name);
+        this.setCost(cost);
     }
 
     @Override
@@ -32,9 +33,13 @@ public class Medicines extends Items implements Serializable {
 
     @Override
     public String toString() {
-        return "Medicines{" +
+        return "Items{" +
+                "id='" + super.getId() + '\'' +
+                ", name='" + super.getName() + '\'' +
+                ", cost=" + super.getCost() +
+                ", manufacturingDate=" + super.getManufacturingDate() +
+                " Medicines{" +
                 "usage='" + usage + '\'' +
-                super.toString() +
                 '}';
     }
 }

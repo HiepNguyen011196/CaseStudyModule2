@@ -11,17 +11,15 @@ import java.util.Objects;
 
 
 public class Manager {
-//   ReadWriteData readWriteFileBinary = ReadWriteFileBinary.getInstance();
     private final ReadWriteData<Items> readWriteFileBinary = ReadWriteFileBinary.getInstance();
-//    List<Items> itemsList = readWriteFileBinary.readData("item.dat");
-    List<Items> itemsList= new ArrayList<>();
+    public static List<Items> itemsList= new ArrayList<>();
 
     public void add(Items items) {
         itemsList.add(items);
         readWriteFileBinary.writeData("item.dat", itemsList);
     }
 
-    public void display() {
+    public static void display() {
         int count = 1;
         System.out.println("[Number of item: " + itemsList.size() + "]\n");
         if (itemsList.size() == 0) {
@@ -64,16 +62,20 @@ public class Manager {
 
     public void editName(String id, String editName) {
         for (Items i : itemsList) {
-            if(Objects.equals(i.getId(), id))
+            if(Objects.equals(i.getId(), id)) {
                 i.setName(editName);
+                break;
+            }
         }
         readWriteFileBinary.writeData("item.dat", itemsList);
     }
 
     public void editCost(String id, double cost) {
         for (Items i : itemsList) {
-            if(Objects.equals(i.getId(), id))
+            if(Objects.equals(i.getId(), id)) {
                 i.setCost(cost);
+                break;
+            }
         }
         readWriteFileBinary.writeData("item.dat", itemsList);
     }
@@ -88,5 +90,13 @@ public class Manager {
     public void sortByCostLowToHigh() {
         itemsList.sort((Comparator.comparingDouble(Items::getCost)));
         display();
+    }
+
+    public double totalCost() {
+        int sum = 0;
+        for (Items i : itemsList) {
+            sum += i.getCost();
+        }
+        return sum;
     }
 }
